@@ -1,6 +1,20 @@
 @extends('layouts.login')
 
 @section('content')
-<h2>機能を実装していきましょう。</h2>
+
+  <div class=''>
+    <table class=''>
+      <tr>
+        <th>User</th>
+        <th>Posts</th>
+      </tr>
+      @foreach ($posts as $post)
+      <tr>
+        <td>{{ $post->user_id }}</td>
+        <td>{{ $post->posts }}</td>
+      </tr>
+      @endforeach
+    </table>
+  </div>
 
 @endsection
