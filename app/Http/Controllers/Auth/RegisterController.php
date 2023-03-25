@@ -48,11 +48,28 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'username' => 'required|string|max:255',
-            'mail' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:4|confirmed',
-        ]);
+        return Validator::make(
+            $data,
+            [
+                'username' => ['required', 'between:4,12'],
+                'mail' => ['required', 'between:4,50', 'unique:users'],
+                'password' => ['required', 'alpha_num', 'between:4,12'],
+                'password-confirm' => ['required', 'alpha_num', 'between:4,12',  'same:password'],
+            ],
+
+            [
+                'username.required' => '必須項目です',
+                'username.between' => '4文字以上12文字以内で入力してください',
+                'mail.required' => '必須項目です',
+                'mail.between' => '4文字以上50文字以内で入力してください',
+                'mail.unique' => '既に登録されているメールアドレスです',
+                'password.required' => '必須項目です',
+                'password.alpha_num' => '英数字しか使えません',
+                'password.between' => '4文字以上12文字以内で入力してください',
+                'password-confirm.required' => '必須項目です',
+                'password-confirm.same' => 'パスワードと確認用パスワードが一致していません',
+            ]
+            )->validate();
     }
 
     /**
@@ -75,11 +92,13 @@ class RegisterController extends Controller
     //     return view("auth.register");
     // }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         if($request->isMethod('post')){
             $data = $request->input();
-
+            $this->validator($data);
             $this->create($data);
+            session()->put('username', $data['username']);
             return redirect('added');
         }
         return view('auth.register');
