@@ -22,10 +22,10 @@
 <body>
     <header>
         <div id = "head">
-        <h1><a><img src="images/logo.png"></a></h1>
+        <h1><a><img src="images/main_logo.png"></a></h1>
             <div id="">
                 <div id="">
-                    <p>{{ session()->get('username') }}さん<img src="images/arrow.png"></p>
+                    <p>{{ session()->get('username') }}さん<img src="images/dawn.png"></p>
                 <div>
                 <ul>
                     <li><a href="/top">ホーム</a></li>
