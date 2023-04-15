@@ -20,6 +20,7 @@ class PostsController extends Controller
         $post = $request->input('post');
         //'post'= index.blade内、<textarea name="post"…>の「post」
         $id = Auth::id();
+        //現在認証されているユーザーのID取得
         DB::table('posts')->insert([
             'posts' => $post,
             'user_id' => $id,

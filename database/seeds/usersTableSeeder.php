@@ -41,7 +41,7 @@ class usersTableSeeder extends Seeder
             [
                 'username' => 'ddddd',
                 'mail' => 'ddddd@mail.com',
-                'password' => Hash::make('ccccc12345'),
+                'password' => Hash::make('ddddd12345'),
                 'bio' => 'ボンジュール!',
                 'created_at' => '2023-04-08 14:34:04',
                 'updated_at' => '2023-04-08 14:53:23',
