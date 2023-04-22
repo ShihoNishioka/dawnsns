@@ -18,7 +18,7 @@ class PostsController extends Controller
     public function create(Request $request)
     {
         $post = $request->input('post');
-        //'post'= index.blade内、<textarea name="post"…>の「post」
+        //'post'= index.blade内、<textarea name="post"…>の「post」に入力されたものをリクエスト
         $id = Auth::id();
         //現在認証されているユーザーのID取得
         DB::table('posts')->insert([

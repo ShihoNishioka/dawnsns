@@ -17,6 +17,7 @@
 @else
 <table>
 @foreach ($users as $user)
+
 <tr>
   <td>
     <img src="images/{{ $user->images }}" alt="">
