@@ -1,38 +1,3 @@
-<?php
-error_reporting(E_ALL & ~E_NOTICE);
-
-// htmlspecialcharsを簡略化する
-function h($s)
-{
-    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
-}
-
-// 配列系用のvar_dumpを改行させる
-function v($y)
-{
-    echo "<pre class ='var_dump'>";
-    var_dump($y);
-    echo "</pre>";
-}
-
-
-// PDO接続先の設定
-define("HOST", "localhost");
-define("DB_NAME", "dawnsns");
-define("USER", "root");
-define("PASS", "");
-
-// 文字化け対策
-$options = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET 'utf8'");
-// DBとの接続を開始！！
-$pdo = new PDO("mysql:host=" . HOST . ";dbname=" . DB_NAME, USER, PASS, $options);
-
-// 接続エラーが起こった際、例外処理にexception指定のエラー表示を使えるようにする
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// スクリプト処理後もデータベース接続を維持しないようにする
-$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
-?>
 
 <!DOCTYPE html>
 <html>
