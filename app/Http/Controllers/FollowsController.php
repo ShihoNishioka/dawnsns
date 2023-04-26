@@ -15,7 +15,11 @@ class FollowsController extends Controller
         ->join('users','follows.follow','=','users.id')
         ->where('follower', Auth::id())
         ->get();
-        $followPosts ="";
+        $followPosts = DB::table('follows')
+        ->join('posts','follows.follow','=','posts.user_id')
+        ->where('follower', Auth::id())
+        ->get('posts');
+        //dd($followPosts);
         return view('follows.followList',['follows'=>$follows, 'followPosts'=>$followPosts]);
     }
 

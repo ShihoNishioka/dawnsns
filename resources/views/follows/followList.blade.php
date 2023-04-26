@@ -7,6 +7,7 @@
   <a href="">
     <img src="images/{{ $follow->images }}" alt="">
   </a>
+  <td>{{ $followPosts }}</td>
   @endforeach
 </div>
 
