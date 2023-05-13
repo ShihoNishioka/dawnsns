@@ -3,12 +3,21 @@
 @section('content')
 <h1>Follow List</h1>
 <div>
-  @foreach($follows as $follow)
+
+@foreach($followIcons as $followIcon)
+<img src="images/{{$followIcon->images}}">
+@endforeach
+
+<div>
+  @foreach($followPosts as $followPost)
   <a href="">
-    <img src="images/{{ $follow->images }}" alt="">
+    <img src="images/{{ $followPost->images }}" alt="">
   </a>
-  <td>{{ $followPosts }}</td>
+  <td>{{ $followPost->username }}</td>
+  <td>{{ $followPost->posts }}</td>
   @endforeach
+</div>
+
 </div>
 
 @endsection

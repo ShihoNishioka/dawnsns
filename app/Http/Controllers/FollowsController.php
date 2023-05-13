@@ -12,18 +12,41 @@ class FollowsController extends Controller
     public function followList()
     {
         $follows = DB::table('follows')
-        ->join('users','follows.follow','=','users.id')
         ->where('follower', Auth::id())
+        ->pluck('follow');
+
+        $followIcons = DB::table('users')
+        ->whereIn('id',$follows)
+        ->select('id','images')
         ->get();
-        $followPosts = DB::table('follows')
-        ->join('posts','follows.follow','=','posts.user_id')
-        ->where('follower', Auth::id())
-        ->get('posts');
+
+        $followPosts = DB::table('posts')
+        ->join('users','posts.user_id','=','users.id')
+        ->whereIn('posts.user_id', $follows)
+        //->orWhere('posts.user_id',Auth::id())→自分のつぶやきまで表示されてしまうため不要。
+        ->select('users.username','users.images','posts.posts','posts.created_at as created_at')
+        ->get();
         //dd($followPosts);
-        return view('follows.followList',['follows'=>$follows, 'followPosts'=>$followPosts]);
+        return view('follows.followList',['follows'=>$follows, 'followPosts'=>$followPosts,'followIcons'=>$followIcons]);
     }
 
-    public function followerList(){
-        return view('follows.followerList');
+    public function followerList()
+    {
+        $followers = DB::table('follows')
+        ->where('follow', Auth::id())
+        ->pluck('follower');
+
+        $followerIcons = DB::table('users')
+        ->whereIn('id',$followers)
+        ->select('id','images')
+        ->get();
+
+        $followerPosts = DB::table('posts')
+        ->join('users','posts.user_id','=','users.id')
+        ->whereIn('posts.user_id', $followers)
+        ->select('users.username','users.images','posts.posts','posts.created_at as created at')
+        ->get();
+
+        return view('follows.followerList',['followers'=>$followers, 'followerIcons'=>$followerIcons, 'followerPosts'=>$followerPosts]);
     }
 }
