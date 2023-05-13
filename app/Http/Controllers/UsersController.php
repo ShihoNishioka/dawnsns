@@ -12,7 +12,10 @@ class UsersController extends Controller
     public function index()
     {
         $users = DB::table('users')->get();
-        return view('users.search',['users'=>$users]);
+         $btn = DB::table('follows')
+            ->where('follower', Auth::id())
+            ->pluck('follow');
+        return view('users.search',['users'=>$users, 'btn'=>$btn]);
     }
 //'users.search'は「usersフォルダ内のsearch.blade」の意味
     public function result(Request $request)
@@ -25,12 +28,29 @@ class UsersController extends Controller
             $users = DB::table('users')
             ->where('username', 'like', '%'.$keyword.'%')
             ->get();
-    // dd($users);
-        return view('users.search',['users'=>$users,'keyword'=>$keyword]);
+            //dd($users);
+            $btn = DB::table('follows')
+            ->where('follower', Auth::id())
+            ->pluck('follow');
+
+        return view('users.search',['users'=>$users,'keyword'=>$keyword, 'btn'=>$btn]);
     }
 
-    public function profile(){
-        return view('users.profile');
+    public function profile($id)
+    {
+        $profile = DB::table('users')
+        ->where('id',$id)
+        ->first();
+        // dd($profile);
+        $btn = DB::table('follows')
+        ->where('follower', Auth::id())
+        ->pluck('follow');
+
+        $posts = DB::table('posts')
+        ->where('user_id',$id)
+        ->get();
+
+        return view('users.profile',['profile'=>$profile, 'btn'=>$btn, 'posts'=>$posts]);
     }
 
 

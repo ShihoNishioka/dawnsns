@@ -24,7 +24,7 @@ class FollowsController extends Controller
         ->join('users','posts.user_id','=','users.id')
         ->whereIn('posts.user_id', $follows)
         //->orWhere('posts.user_id',Auth::id())→自分のつぶやきまで表示されてしまうため不要。
-        ->select('users.username','users.images','posts.posts','posts.created_at as created_at')
+        ->select('users.id','users.username','users.images','posts.posts','posts.created_at as created_at')
         ->get();
         //dd($followPosts);
         return view('follows.followList',['follows'=>$follows, 'followPosts'=>$followPosts,'followIcons'=>$followIcons]);
@@ -44,9 +44,30 @@ class FollowsController extends Controller
         $followerPosts = DB::table('posts')
         ->join('users','posts.user_id','=','users.id')
         ->whereIn('posts.user_id', $followers)
-        ->select('users.username','users.images','posts.posts','posts.created_at as created at')
+        ->select('users.id','users.username','users.images','posts.posts','posts.created_at as created at')
         ->get();
 
         return view('follows.followerList',['followers'=>$followers, 'followerIcons'=>$followerIcons, 'followerPosts'=>$followerPosts]);
+    }
+
+    public function follow(Request $request)
+    {
+        $follow = $request->input('follow');
+        DB::table('follows')->insert([
+            'follow' => $follow,
+            'follower' => Auth::id(),
+        ]);
+        return back();
+    }
+
+    public function delete(Request $request)
+    {
+        $delete = $request->input('delete');
+        DB::table('follows')
+            ->where('follower', Auth::id())
+            ->where('follow', $delete)
+            ->delete();
+
+        return back();
     }
 }

@@ -17,12 +17,28 @@
 @else
 <table>
 @foreach ($users as $user)
-
 <tr>
   <td>
     <img src="images/{{ $user->images }}" alt="">
   </td>
   <td>{{ $user->username }}</td>
+  @if($btn->contains($user->id))
+  <td>
+    <form action="/delete" method="post">
+      @csrf
+      <input type="hidden" name="delete" value="{{ $user->id }}">
+    <button>フォローをはずす</button>
+    </form>
+  </td>
+  @else
+  <td>
+    <form action="/follow" method="post">
+      @csrf
+      <input type="hidden" name="follow" value="{{ $user->id }}">
+      <button>フォローをする</button>
+    </form>
+  </td>
+  @endif
 </tr>
 @endforeach
 </table>

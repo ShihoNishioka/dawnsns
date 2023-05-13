@@ -5,12 +5,14 @@
 <div>
 
 @foreach($followIcons as $followIcon)
-<img src="images/{{$followIcon->images}}">
+<a href="/profile/{{ $followIcon->id }}">
+  <img src="images/{{$followIcon->images}}">
+</a>
 @endforeach
 
 <div>
   @foreach($followPosts as $followPost)
-  <a href="">
+  <a href="/profile/{{ $followPost->id }}">
     <img src="images/{{ $followPost->images }}" alt="">
   </a>
   <td>{{ $followPost->username }}</td>
