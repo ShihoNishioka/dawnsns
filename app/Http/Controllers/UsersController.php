@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    //
+    //Auth::idは認証済みユーザー（現在ログインしているユーザーのid）
     public function index()
     {
         $users = DB::table('users')->get();
@@ -53,6 +53,19 @@ class UsersController extends Controller
         return view('users.profile',['profile'=>$profile, 'btn'=>$btn, 'posts'=>$posts]);
     }
 
+    public function myProfile()
+    {
+        $id = Auth::id();
+        $myProfile = DB::table('users')
+        ->where('id', $id)
+        ->first();
+        //dd($myProfile);
 
+        return view('users.myProfile',['id'=>$id, 'myProfile'=>$myProfile]);
+    }
 
+    public function profileUpload()
+    {
+        return redirect('/profile');
+    }
 }
