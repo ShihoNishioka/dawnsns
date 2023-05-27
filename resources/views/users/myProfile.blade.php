@@ -3,11 +3,13 @@
 @section('content')
 <div>
   <table>
-  <img src="/images/{{ $myProfile->images }}">
-  <form action="/profile" method="post">
+  <img src="{{asset('storage/images/'. $myProfile->images)}}">
+  <form action="/my-profile" method="post" enctype="multipart/form-data">
     @csrf
     <div class="myProfile">
-      <label for="username">User Name</label>
+      <input type="hidden" name="username" value="{{ $myProfile->id }}">
+
+    <label for="username">User Name</label>
       <input type="text" name="username" value="{{ $myProfile->username }}">
     </div>
     <div class="myProfile">

@@ -64,8 +64,43 @@ class UsersController extends Controller
         return view('users.myProfile',['id'=>$id, 'myProfile'=>$myProfile]);
     }
 
-    public function profileUpload()
+    public function profileUpdate(Request $request)
     {
-        return redirect('/profile');
+        // 更新したデータを受け取る
+        $username = $request->input('username');
+        $mail = $request->input('mail');
+        $newPassword = $request->input('new password');
+        $bio = $request->input('bio');
+        $icon = $request->file('icon');
+        //dd($icon);
+
+        //  update処理をする
+        DB::table('users')
+        ->where('id', Auth::id())
+        ->update([
+            'username'=>$username,
+            'mail'=>$mail,
+            'bio'=>$bio
+            ]);
+            //issetを使うことによって、パスワードの更新がある場合は下記処理をする。ない場合は何もしない。
+        if(isset($newPassword)){
+            DB::table('users')
+                ->where('id', Auth::id())
+                ->update([
+                'password'=>bcrypt($newPassword)
+                ]);
+            };
+            //画像の更新がある場合は、画像についている名前を取って来て、それをDBに更新し、storeもしくはstoreAsで保存する。
+        if(isset($icon)){
+            $iconName = $request->file('icon')->getClientOriginalName();
+            //dd($iconName);
+            DB::table('users')
+            ->where('id', Auth::id())
+            ->update([
+                'images'=>$iconName
+            ]);
+            $icon->storeAs('public/images', $iconName);
+        };
+        return back();
     }
 }
