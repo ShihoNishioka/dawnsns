@@ -32,6 +32,15 @@
       <label for="Icon Image">Icon Image</label>
       <input type="file" name="icon" accept="image/jpeg, image/png">
     </div>
+    @if($errors->any())
+    <div>
+      <ul>
+        @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
     <input type="submit" name="upload" value="更新">
   </form>
   </table>

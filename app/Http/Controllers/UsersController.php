@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
@@ -82,7 +84,7 @@ class UsersController extends Controller
             'mail'=>$mail,
             'bio'=>$bio
             ]);
-            //issetを使うことによって、パスワードの更新がある場合は下記処理をする。ない場合は何もしない。
+            //issetを使うことによって、パスワードの更新がある場合は下記処理をする。ない場合は何もしない。という処理。
         if(isset($newPassword)){
             DB::table('users')
                 ->where('id', Auth::id())
@@ -90,7 +92,7 @@ class UsersController extends Controller
                 'password'=>bcrypt($newPassword)
                 ]);
             };
-            //画像の更新がある場合は、画像についている名前を取って来て、それをDBに更新し、storeもしくはstoreAsで保存する。
+            //画像の更新がある場合は、画像についている名前を取って来て、それをDBに更新し、storeもしくはstoreAsで保存する。という処理。
         if(isset($icon)){
             $iconName = $request->file('icon')->getClientOriginalName();
             //dd($iconName);
@@ -103,4 +105,25 @@ class UsersController extends Controller
         };
         return back();
     }
+
+    public function store(Request $request)
+    {
+            $request->validate([
+                'username' => ['between:4,12'],
+                'mail' => ['between:4,50', 'unique:users'],
+                //「アドレスに変更がなければ再登録可能にする」？
+                'new password' => ['alpha_num', 'between:4,12', 'unique:users'],
+                'bio' => ['string', 'max:200'],
+                'icon' => ['image', 'mimes:jpg,png,bmp,gif,svg'],
+                //「ファイル名が英数字のみ」？
+            ],
+            [
+                'username.between' => '4文字以上12文字以内で入力してください',
+                'mail.unique' => '既に登録されているメールアドレスです',
+                'new password.alpha' => '英数字しか使えません',
+                'new password.between' => '4文字以上12文字以内で入力してください',
+                'icon' => '',
+            ]);
+            return back();
+        }
 }

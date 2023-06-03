@@ -36,6 +36,7 @@ Route::post('/post','PostsController@create')->middleware('auth');
 
 Route::get('/my-profile','UsersController@myProfile')->middleware('auth');
 Route::post('/my-profile','UsersController@profileUpdate')->middleware('auth');
+Route::post('/my-profile','UsersController@store')->middleware('auth');
 
 Route::get('/profile/{id}','UsersController@profile')->middleware('auth');
 
