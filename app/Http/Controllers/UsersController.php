@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -110,19 +111,18 @@ class UsersController extends Controller
     {
             $request->validate([
                 'username' => ['between:4,12'],
-                'mail' => ['between:4,50', 'unique:users'],
-                //「アドレスに変更がなければ再登録可能にする」？
+                'mail' => ['between:4,50', Rule::unique('users')->ignore(Auth::id(), 'id')],
+                //「アドレスに変更がなければ再登録可能にする」→ログイン中のuserのアドレスは例外とする。というルールを設定してあげる！
                 'new password' => ['alpha_num', 'between:4,12', 'unique:users'],
                 'bio' => ['string', 'max:200'],
                 'icon' => ['image', 'mimes:jpg,png,bmp,gif,svg'],
-                //「ファイル名が英数字のみ」？
             ],
             [
-                'username.between' => '4文字以上12文字以内で入力してください',
+                'username.between' => 'User Nameは4文字以上12文字以内で入力してください',
                 'mail.unique' => '既に登録されているメールアドレスです',
-                'new password.alpha' => '英数字しか使えません',
-                'new password.between' => '4文字以上12文字以内で入力してください',
-                'icon' => '',
+                'new password.alpha' => 'パスワードには英数字しか使えません',
+                'new password.between' => 'パスワードは4文字以上12文字以内で入力してください',
+                'icon' => '拡張子が違います。（※.jpg、.png、.bmp、.gif、.svgのいずれか。）',
             ]);
             return back();
         }

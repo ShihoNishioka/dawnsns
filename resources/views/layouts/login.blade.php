@@ -23,15 +23,15 @@
 <body>
     <header>
         <div id = "head">
-        <h1><a href="/top"><img src="{{ asset('images/main_logo.png') }}"></a></h1>
+        <h1><a href="/top"><img class="image-dawn" src="{{ asset('images/main_logo.png') }}"></a></h1>
             <div id="">
-                <div id="">
+                <div id="username">
                     <p>{{ Auth::user()->username }}さん<img src="{{ asset('images/dawn.png') }}"></p>
                 <div>
                 <ul>
                     <li><a href="/top">HOME</a></li>
                     <li><a href="/my-profile">プロフィール編集</a></li>
-                    <li><a href="/logout">LOGOUT</a></li>
+                    <lsi><a href="/logout">LOGOUT</a></lsi>
                 </ul>
             </div>
         </div>
