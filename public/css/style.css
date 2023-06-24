@@ -1,22 +1,152 @@
 @charset "utf-8";
-html{
+
+html {
+    font-size: 16px;
 }
-body{
+
+body {
+    color: #624649;
+    font-size: 1rem;
 }
+
 /* header */
-header{
-    background:#3C4767;
+header {
+    background: #3C4767;
+}
+
+#head {
+    display: flex;
+    height: auto;
+}
+
+h1 {
+    flex-basis: 75%;
+}
+
+/*プルダウンメニューの設定*/
+.pulldown-wrapper {
+    position: relative;
+    top: 20px;
+    height: 70px;
+    max-width: 1000px;
+    flex-basis: 25%;
+}
+
+/*プルダウンメニュー(開く前=user名+img)*/
+.pulldown-username {
+    display: flex;
+}
+
+.pulldown-username p {
+    color: #fff;
+}
+
+/* 下矢印 */
+.init-bottom:after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 0 0 15px;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.pulldown-username img {
+    display: block;
+    margin-left: 10%;
+}
+
+/*プルダウンメニュー開いたとき*/
+ul {
+    display: block;
+}
+
+.pulldown-menu {
+    display: none;
+    width: auto;
+    position: absolute;
+    top: 40px;
+}
+
+.pulldown-username:hover .pulldown-menu {
+    display: block;
+}
+
+.pulldown-list {
+    background-color: #fff;
+    height: 50px;
+    transition: all .3s;
+}
+
+.pulldown-list:hover {
+    background-color: #DC143C;
+    color: #fff;
+}
+
+.pulldown-list a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+    width: auto;
 }
 
 /* main content */
-#row{
+
+#row {
     display: flex;
-    flex-flow: row wrap;
 }
-#container{
+
+#container {
     flex: 0 0 80%;
 }
-#side-bar{
+
+#side-bar {
     flex: 0 0 19%;
+    margin-right: auto;
     border-left: 1px solid #6C6C6C;
+}
+
+
+/*つぶやき設定*/
+.top-posts {
+    display: block;
+}
+
+.updateModal {
+    display: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.postModal {
+    position: absolute;
+    left: 25%;
+    top: 33%;
+    width: 50%;
+    height: 33%;
+    background-color: #fff;
+}
+
+.post-update {
+    position: absolute;
+    left: 25%;
+    top: 33%;
+    width: 50%;
+    height: 33%;
+}
+
+.edit-btn {
+    position: absolute;
+    left: 80%;
+    top: 50%;
 }

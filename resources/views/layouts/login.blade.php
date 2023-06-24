@@ -24,17 +24,17 @@
     <header>
         <div id = "head">
         <h1><a href="/top"><img class="image-dawn" src="{{ asset('images/main_logo.png') }}"></a></h1>
-            <div id="">
-                <div id="username">
-                    <p>{{ Auth::user()->username }}さん<img src="{{ asset('images/dawn.png') }}"></p>
-                <div>
-                <ul>
-                    <li><a href="/top">HOME</a></li>
-                    <li><a href="/my-profile">プロフィール編集</a></li>
-                    <lsi><a href="/logout">LOGOUT</a></lsi>
-                </ul>
+            <div class="pulldown-wrapper">
+                <div class="pulldown-username">
+                    <p class="init-bottom">{{ Auth::user()->username }}さん</p>
+                    <img src="{{ asset('images/dawn.png') }}">
+                    <ul class="pulldown-menu">
+                        <li class="pulldown-list"><a href="/top">HOME</a></li>
+                        <li class="pulldown-list"><a href="/my-profile">プロフィール編集</a></li>
+                        <li class="pulldown-list"><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
     </header>
     <div id="row">
         <div id="container">
@@ -59,7 +59,7 @@
     </div>
     <footer>
     </footer>
-    <script src="JavaScriptファイルのURL"></script>
-    <script src="JavaScriptファイルのURL"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
