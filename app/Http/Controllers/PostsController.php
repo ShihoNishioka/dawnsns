@@ -16,6 +16,30 @@ class PostsController extends Controller
         return view('posts.index',['posts'=>$posts]);
     }
 
+    public function update(Request $request)
+    {
+        $post = $request->input('post-update');
+        $update = $request->input('update');
+        DB::table('posts')
+        ->where('id', $update)
+        ->update(['posts' => $post]);
+
+        return back();
+    }
+
+    public function delete(Request $request)
+    {
+        $post = $request->input('post-delete');
+        $delete = $request->input('delete');
+        DB::table('posts')
+        ->where('id', $delete)
+        ->delete();
+
+        return back();
+//        dd($delete);
+    }
+
+    //新しいつぶやきの入力フォームの設定
     public function create(Request $request)
     {
         $post = $request->input('post');
