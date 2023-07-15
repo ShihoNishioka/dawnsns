@@ -28,12 +28,12 @@ Route::post('/register', 'Auth\RegisterController@register');
 
 Route::get('/added', 'Auth\RegisterController@added');
 
-Route::get('/logout', );
+Route::get('/logout', 'Auth\LoginController@logout');
 
 
 //ログイン中のページ
 Route::get('/top','PostsController@index')->middleware('auth');
-
+Route::get('/test','PostsController@test')->middleware('auth');
 Route::post('/post','PostsController@create')->middleware('auth');
 Route::post('/post-update', 'PostsController@update')->middleware('auth');
 Route::post('/post-delete', 'PostsController@delete')->middleware('auth');
@@ -41,7 +41,7 @@ Route::post('/post-delete', 'PostsController@delete')->middleware('auth');
 
 Route::get('/my-profile','UsersController@myProfile')->middleware('auth');
 Route::post('/my-profile','UsersController@profileUpdate')->middleware('auth');
-Route::post('/my-profile','UsersController@store')->middleware('auth');
+// Route::post('/my-profile','UsersController@store')->middleware('auth');
 
 /**他のユーザーのページ */
 Route::get('/profile/{id}','UsersController@profile')->middleware('auth');
