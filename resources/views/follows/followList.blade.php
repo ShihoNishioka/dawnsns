@@ -1,25 +1,29 @@
 @extends('layouts.login')
 
 @section('content')
-<h1>Follow List</h1>
-<div>
-
+<h1 class="lists">Follow List</h1>
+<div class="lists-icons">
 @foreach($followIcons as $followIcon)
-<a href="/profile/{{ $followIcon->id }}">
-  <img src="images/{{$followIcon->images}}">
-</a>
-@endforeach
-
-<div>
-  @foreach($followPosts as $followPost)
-  <a href="/profile/{{ $followPost->id }}">
-    <img src="images/{{ $followPost->images }}" alt="">
+  <a href="/profile/{{ $followIcon->id }}">
+    <img class="icons" src="images/{{$followIcon->images}}">
   </a>
-  <td>{{ $followPost->username }}</td>
-  <td>{{ $followPost->posts }}</td>
+@endforeach
+</div>
+<hr>
+<div class="lists-posts">
+  @foreach($followPosts as $followPost)
+  <div>
+    <a href="/profile/{{ $followPost->id }}">
+      <img class="icons" src="images/{{ $followPost->images }}" alt="">
+    </a>
+    <p>{{ $followPost->username }}</p>
+    <p>{{ $followPost->posts }}</p>
+    <p>{{ $followPost->created_at }}</p>
+  </div>
+  <hr>
   @endforeach
 </div>
 
-</div>
+
 
 @endsection

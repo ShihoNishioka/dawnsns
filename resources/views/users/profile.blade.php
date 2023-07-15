@@ -2,40 +2,44 @@
 
 @section('content')
 <div>
-  <table>
-  <img src="/images/{{ $profile->images }}">
-    <td>Name</td>
-    <td>{{ $profile->username }}</td>
-    <td>Bio</td>
-    <td>{{ $profile->bio }}</td>
-  </table>
-  @if($btn->contains($profile->id))
-  <td>
-    <form action="/delete" method="post">
-      @csrf
-      <input type="hidden" name="delete" value="{{ $profile->id }}">
-    <button>フォローをはずす</button>
-    </form>
-  </td>
-  @else
-  <td>
-    <form action="/follow" method="post">
-      @csrf
-      <input type="hidden" name="follow" value="{{ $profile->id }}">
-      <button>フォローをする</button>
-    </form>
-  </td>
-  @endif
-
-  <div>
-    @foreach($posts as $post)
+  <div class="profiles">
     <table>
+    <img class="icons" src="/images/{{ $profile->images }}">
     <tr>
-        <img src="/images/{{ $profile->images }}">
-        <td>{{ $post->posts }}</td>
+      <td>Name</td>
+      <td>{{ $profile->username }}</td>
+    </tr>
+    <tr>
+      <td>Bio</td>
+      <td>{{ $profile->bio }}</td>
+    </tr>
+  </table>
+  </div>
+  @if($btn->contains($profile->id))
+    <form action="/delete" method="post">
+        @csrf
+        <input type="hidden" name="delete" value="{{ $profile->id }}">
+      <button class="unfollow-btn" >フォローをはずす</button>
+    </form>
+    @else
+    <form action="/follow" method="post">
+    @csrf
+      <input type="hidden" name="follow" value="{{ $profile->id }}">
+      <button class="follow-btn" >フォローをする</button>
+    </form>
+  @endif
+  <hr>
+  <div class="profile-posts">
+  @foreach($posts as $post)
+    <table>
+      <tr>
+        <td><img class="icons" src="/images/{{ $profile->images }}"></td>
+        <td class="posts">{{ $post->posts }}</td>
+        <td class="time">{{ $post->created_at }}</td>
       </tr>
     </table>
-    @endforeach
+    <hr>
+  @endforeach
   </div>
 
 </div>

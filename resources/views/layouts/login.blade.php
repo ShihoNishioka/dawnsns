@@ -31,6 +31,7 @@
                     <ul class="pulldown-menu">
                         <li class="pulldown-list"><a href="/top">HOME</a></li>
                         <li class="pulldown-list"><a href="/my-profile">プロフィール編集</a></li>
+                        <li class="pulldown-list"><a href="/test">テスト</a></li>
                         <li class="pulldown-list"><a href="/logout">LOGOUT</a></li>
                     </ul>
                 </div>
@@ -43,17 +44,18 @@
         <div id="side-bar">
             <div id="confirm">
                 <p>{{ Auth::user()->username }}さんの</p>
-                <div>
+                <div class="follows">
                 <p>フォロー数</p>
-                <p>{{ $countFollower }}名</p>
+                <p class="numbers">{{ $countFollower }}名</p>
                 </div>
                 <p class="btn"><a href="/follow-list">フォローリスト</a></p>
-                <div>
+                <div class="followers">
                 <p>フォロワー数</p>
-                <p>{{ $countFollow }}名</p>
+                <p class="numbers">{{ $countFollow }}名</p>
                 </div>
                 <p class="btn"><a href="/follower-list">フォロワーリスト</a></p>
             </div>
+            <hr>
             <p class="btn"><a href="/search">ユーザー検索</a></p>
         </div>
     </div>

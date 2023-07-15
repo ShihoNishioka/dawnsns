@@ -2,12 +2,12 @@
 
 @section('content')
 
-<form action="/search" method="post">
+<form class="search-users" action="/search" method="post">
   @csrf
   <input type="text" name="search_users" placeholder="ユーザー名">
   <input type="submit" name="search" value="検索">
 </form>
-
+<hr>
 @if(isset($keyword))
 <p>検索ワード：{{ $keyword }}</p>
 @endif
@@ -15,11 +15,11 @@
 @if($users->isEmpty())
 <p>当てはまるユーザーがいません</p>
 @else
-<table>
+<table class="search-results">
 @foreach ($users as $user)
 <tr>
   <td>
-    <img src="images/{{ $user->images }}" alt="">
+    <img class="icons" src="images/{{ $user->images }}" alt="">
   </td>
   <td>{{ $user->username }}</td>
   @if($btn->contains($user->id))
@@ -27,7 +27,7 @@
     <form action="/delete" method="post">
       @csrf
       <input type="hidden" name="delete" value="{{ $user->id }}">
-    <button>フォローをはずす</button>
+    <button class="unfollow">フォローをはずす</button>
     </form>
   </td>
   @else
@@ -35,7 +35,7 @@
     <form action="/follow" method="post">
       @csrf
       <input type="hidden" name="follow" value="{{ $user->id }}">
-      <button>フォローをする</button>
+      <button class="follow">フォローをする</button>
     </form>
   </td>
   @endif

@@ -1,9 +1,8 @@
 @extends('layouts.login')
 
 @section('content')
-<div>
-  <table>
-  <img src="{{asset('storage/images/'. $myProfile->images)}}">
+<div class="my-profile">
+  <img class="icons" src="{{asset('storage/images/'. $myProfile->images)}}">
   <form action="/my-profile" method="post" enctype="multipart/form-data">
     @csrf
     <div class="myProfile">
@@ -41,8 +40,7 @@
       </ul>
     </div>
     @endif
-    <input type="submit" name="upload" value="更新">
+    <input  class="profile-update" type="submit" name="upload" value="更新">
   </form>
-  </table>
 </div>
 @endsection
