@@ -11,7 +11,18 @@ class PostsController extends Controller
     //
     public function index()
     {
-        $posts = DB::table('posts')->get();
+        $follows = DB::table('follows')
+            ->where('follower', Auth::id())
+            ->pluck('follow');
+
+        $posts = DB::table('posts')
+            ->join('users','posts.user_id','=','users.id')
+            ->join('follows','posts.user_id','=','follows.follower')
+            ->whereIn('posts.user_id', $follows)
+            ->orWhere('posts.user_id',Auth::id())
+            ->select('posts.id', 'posts.user_id', 'users.username','users.images','posts.posts','posts.created_at as created_at')
+            ->get();
+       // dd($posts);
 
         return view('posts.index',['posts'=>$posts]);
     }
@@ -29,7 +40,6 @@ class PostsController extends Controller
 
     public function delete(Request $request)
     {
-        $post = $request->input('post-delete');
         $delete = $request->input('delete');
         DB::table('posts')
         ->where('id', $delete)
@@ -51,5 +61,15 @@ class PostsController extends Controller
             'user_id' => $id,
         ]);
         return redirect('/top');
+    }
+
+    public function test()
+    {
+       $testPosts = DB::table('posts')
+            ->join('users','posts.user_id','=','users.id')
+            ->select('users.id','users.username','users.images','posts.posts','posts.created_at as created_at')
+            ->where('user_id', Auth::id())
+            ->get();
+        return view('posts.test',['testPosts'=>$testPosts]);
     }
 }

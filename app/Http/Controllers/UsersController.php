@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
-    //Auth::idは認証済みユーザー（現在ログインしているユーザーのid）
+    //Auth::idは認証済みユーザー（現在ログインしているユーザーのidのこと）
     public function index()
     {
         $users = DB::table('users')->get();
@@ -69,6 +69,21 @@ class UsersController extends Controller
 
     public function profileUpdate(Request $request)
     {
+        $request->validate([
+            'username' => ['between:4,12'],
+            'mail' => ['between:4,50', Rule::unique('users')->ignore(Auth::id(), 'id')],
+            //「アドレスに変更がなければ再登録可能にする」→ログイン中のuserのアドレスは例外とする。というルールを設定してあげる！
+            'new password' => ['alpha_num', 'between:4,12', 'unique:users'],
+            'bio' => ['string', 'max:200'],
+            'icon' => ['image', 'mimes:jpg,png,bmp,gif,svg'],
+            ],
+            [
+            'username.between' => 'User Nameは4文字以上12文字以内で入力してください',
+            'mail.unique' => '既に登録されているメールアドレスです',
+            'new password.alpha' => 'パスワードには英数字しか使えません',
+            'new password.between' => 'パスワードは4文字以上12文字以内で入力してください',
+            'icon' => '拡張子が違います。（※.jpg、.png、.bmp、.gif、.svgのいずれか。）',
+            ]);
         // 更新したデータを受け取る
         $username = $request->input('username');
         $mail = $request->input('mail');
@@ -106,24 +121,4 @@ class UsersController extends Controller
         };
         return back();
     }
-
-    public function store(Request $request)
-    {
-            $request->validate([
-                'username' => ['between:4,12'],
-                'mail' => ['between:4,50', Rule::unique('users')->ignore(Auth::id(), 'id')],
-                //「アドレスに変更がなければ再登録可能にする」→ログイン中のuserのアドレスは例外とする。というルールを設定してあげる！
-                'new password' => ['alpha_num', 'between:4,12', 'unique:users'],
-                'bio' => ['string', 'max:200'],
-                'icon' => ['image', 'mimes:jpg,png,bmp,gif,svg'],
-            ],
-            [
-                'username.between' => 'User Nameは4文字以上12文字以内で入力してください',
-                'mail.unique' => '既に登録されているメールアドレスです',
-                'new password.alpha' => 'パスワードには英数字しか使えません',
-                'new password.between' => 'パスワードは4文字以上12文字以内で入力してください',
-                'icon' => '拡張子が違います。（※.jpg、.png、.bmp、.gif、.svgのいずれか。）',
-            ]);
-            return back();
-        }
 }

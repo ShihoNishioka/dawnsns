@@ -49,6 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make(
+            //入力された内容($data)
             $data,
             [
                 'username' => ['required', 'between:4,12'],
@@ -85,6 +86,7 @@ class RegisterController extends Controller
             'mail' => $data['mail'],
             'password' => bcrypt($data['password']),
         ]);
+        //bcryptは、パスワード専用のハッシュ値を生成してくれるパスワードハッシュアルゴリズム。
     }
 
 
@@ -94,11 +96,13 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+        //isMethodメソッドを使えば、指定した文字列とHTTP動詞が一致するかを調べる（一致すればtrue、しなければfalseが返る）
         if($request->isMethod('post')){
             $data = $request->input();
             $this->validator($data);
             $this->create($data);
             session()->put('username', $data['username']);
+            //sessionでサーバー上に一時保存されたユーザー名を遷移した画面(added.blade)に表示させている。
             return redirect('added');
         }
         return view('auth.register');

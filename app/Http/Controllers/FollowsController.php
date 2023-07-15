@@ -44,7 +44,7 @@ class FollowsController extends Controller
         $followerPosts = DB::table('posts')
         ->join('users','posts.user_id','=','users.id')
         ->whereIn('posts.user_id', $followers)
-        ->select('users.id','users.username','users.images','posts.posts','posts.created_at as created at')
+        ->select('users.id','users.username','users.images','posts.posts','posts.created_at as created_at')
         ->get();
 
         return view('follows.followerList',['followers'=>$followers, 'followerIcons'=>$followerIcons, 'followerPosts'=>$followerPosts]);
